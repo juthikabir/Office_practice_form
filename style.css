@@ -1,0 +1,101 @@
+
+            
+
+        .container-fluid {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+        .login-container {
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .text-decoration-none {
+            color: rgb(75, 70, 70);
+        }
+
+        .text-decoration-none {
+            color: #3e55bd  !important;
+            text-decoration: underline !important;
+
+        }
+
+        .clear-input{
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #4d37c7;
+            font-size: 18px;
+            background: #e0e0e0;
+            border: none;
+            padding: 0;
+            border: none;
+            padding: 0;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 18px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-input:hover {
+            background: #6c7080;
+            
+        }
+
+        .clear-input:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control:not(:placeholder-shown) + .clear-input {
+            display: inline;
+        }
+
+        .input-group-custom {
+            margin-bottom: 1rem;
+        }
+
+        .input-hint {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+
+        .btn {
+    background-color: #4a719b;
+    border-color: #566e88;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #576f88;
+    border-color: #39536e;
+}
+
+.input-wrapper .form-control {
+    padding-right: 35px;
+}
+
+
+.form-control:focus {
+    border-color: #4169E1;
+    box-shadow: none;
+}
+
