@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="accede/css/cstyle2.css">
+    
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="page-sidebar">
+    <div class="sidebar-header-section">
+        <a href="#" class="brand-logo-link"><i>KoMiCo</i></a>
+        <div class="brand-subtitle-text">외주 품질관리 시스템</div>
+    </div>
+    <ul class="navigation-menu-list">
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link is-active" data-page="dashboard">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>대시보드</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="coa">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>CoA</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <i class="bi bi-clipboard-check"></i>
+                <span>Audit</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="auditSubmenu">
+                <li class="submenu-item-link" data-page="audit-plan">계획</li>
+                <li class="submenu-item-link" data-page="audit-result">결과</li>
+                <li class="submenu-item-link" data-page="audit-finding">Finding</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span>NCR</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="ncrSubmenu">
+                <li class="submenu-item-link" data-page="ncr-occur">발생</li>
+                <li class="submenu-item-link" data-page="ncr-car">CAR</li>
+                <li class="submenu-item-link" data-page="ncr-action">조치</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="pdn">
+                <i class="bi bi-diagram-3"></i>
+                <span>PDN</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="spc">
+                <i class="bi bi-bar-chart-line"></i>
+                <span>SPC</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <i class="bi bi-folder2"></i>
+                <span>문서</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="reportSubmenu">
+                <li class="submenu-item-link" data-page="report-sqr">SQR</li>
+                <li class="submenu-item-link" data-page="report-drawing">도면</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <i class="bi bi-gear"></i>
+                <span>설정</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="settingSubmenu">
+                <li class="submenu-item-link" data-page="setting-company">업체</li>
+                <li class="submenu-item-link" data-page="setting-risk">위험</li>
+                <li class="submenu-item-link" data-page="setting-standard">기준값</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!-- Top Bar -->
+<div class="app-topbar">
+    <div class="topbar-left-section"></div>
+    <div class="topbar-right-section">
+        <a href="#" class="topbar-nav-link">공지사항</a>
+        <a href="#" class="topbar-nav-link">1:1문의</a>
+        <button class="topbar-action-button" title="알림">
+            <i class="bi bi-bell"></i>
+        </button>
+        <span class="topbar-user-name">최현우</span>
+        <button class="topbar-action-button" title="로그아웃">
+            <i class="bi bi-box-arrow-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Scrollable Area -->
+<div class="scroll-content">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-cointainer">
+        <span class="breadcrumb-title">대시보드</span>
+    </div>
+
+    <!-- Date Filter Card -->
+    <div class="date-filter-card">
+
+        <div class="date-filter-top">
+            <span class="date-filter-label">Summary</span>
+            <div class="date-filter-inputs">
+                <!-- Start date -->
+                <div class="filter-date-input-wrapper">
+                    <input type="text" id="startDatePicker" class="filter-date-input-modern" placeholder="YYYY-MM-DD" readonly>
+                    <button class="cal-icon-btn" type="button" id="startCalBtn" title="Start date">
+                        <img src="accede/images/chart_calender.svg" alt="#">
+                    </button>
+                </div>
+                <span class="date-separator">~</span>
+                <!-- End date -->
+                <div class="filter-date-input-wrapper">
+                    <input type="text" id="endDatePicker" class="filter-date-input-modern" placeholder="YYYY-MM-DD" readonly>
+                    <button class="cal-icon-btn" type="button" id="endCalBtn" title="End date">
+                        <img src="accede/images/chart_calender.svg" alt="#">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary cards row -->
+        <div class="summary-wrap">
+
+            <!-- KPI Card -->
+            <div class="kpi-card">
+                <div class="kpi-item">
+                    <div class="kpi-label">CoA 입력율</div>
+                    <div class="kpi-value">92<span class="kpi-unit">%</span></div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-label">Finding 개선율</div>
+                    <div class="kpi-value">1.8<span class="kpi-unit">%</span></div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-label">CAR 발행건수</div>
+                    <div class="kpi-value">3<span class="kpi-unit">건</span></div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-label">PCN 등록건수 변경</div>
+                    <div class="kpi-value">3<span class="kpi-unit">건</span></div>
+                </div>
+            </div>
+
+            <!-- List Cards -->
+            <div class="list-cards">
+
+                <div class="list-card">
+                    <div class="lc-header">
+                        <img src="accede/images/chart2_square-check.svg" alt="#">
+                        <span class="lc-title">CoA 미제출</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">A251203-01</span>
+                        <span class="lc-company">시뉴시스 코리아</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="lc-header">
+                        <img src="accede/images/chart2_square-check.svg" alt="#">
+                        <span class="lc-title">특체요청</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">A251203-01</span>
+                        <span class="lc-company">시뉴시스 코리아</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="lc-header">
+                        <img src="accede/images/chart2_square-check.svg" alt="#">
+                        <span class="lc-title">CAR 요청</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">A251203-01</span>
+                        <span class="lc-company">시뉴시스 코리아</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                    <div class="lc-row">
+                        <span class="lc-code">C251202-04</span>
+                        <span class="lc-company">매크로영상기술</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div><!-- /scroll-content -->
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="accede/js/cscript2.js"></script>
+
+
+</body>
+</html>

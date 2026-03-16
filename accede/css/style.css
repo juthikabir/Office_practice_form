@@ -1,0 +1,205 @@
+.container-fluid {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* Login Page Design */
+        .login-container {
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .clear-input{
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #4d37c7;
+            font-size: 18px;
+            background: #e0e0e0;
+            border: none;
+            padding: 0;
+            border: none;
+            padding: 0;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 18px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-input:hover {
+            background: #6c7080;
+            
+        }
+
+        .clear-input:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control:not(:placeholder-shown) + .clear-input {
+            display: inline;
+        }
+
+        .form-control:focus {
+        border-color: #4169E1;
+        box-shadow: none;
+        }
+
+
+        .input-group-custom {
+            margin-bottom: 1rem;
+        }
+
+        .input-hint {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+
+        .btn {
+    background-color: #4a719b;
+    border-color: #566e88;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #576f88;
+    border-color: #39536e;
+}
+
+.input-wrapper .form-control {
+    padding-right: 35px;
+}
+
+/* modal style */
+.custom-modal {
+    border-radius: 8px;
+    border: none;
+
+    box-shadow: 0 4px 20px rgba(103, 9, 192, 0.2);
+}
+
+ .modal-body {
+    padding: 30px;
+    
+}
+
+.modal-message {
+    background-color:  #6f8aad;
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+
+
+.modal-btn:hover {
+    background-color: #364163;
+}
+
+.modal-btn:active {
+    transform: scale(0.98);
+}
+
+.launch button {
+    color: #39536e;
+}
+
+.modal-close-button {
+   margin-top: 15px; 
+}
+
+
+/*Selection Design */
+
+/* ============================================
+   SELECTION PAGE STYLES
+   ============================================ */
+.selection-container {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.selection-header {
+    margin-bottom: 50px;
+}
+
+.selection-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.selection-subtitle {
+    font-size: 14px;
+    color: #6c757d;
+    margin: 0;
+}
+
+.selection-cards {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.selection-card {
+    width: 220px;
+    height: 220px;
+    background-color: #e8e8e8;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 20px;
+}
+
+.selection-card:hover {
+    background-color: #d4d4d4;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.selection-card:active {
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.card-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+

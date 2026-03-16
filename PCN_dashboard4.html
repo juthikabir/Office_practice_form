@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard4</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Flatpickr CSS for Date Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+    <script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.min.js"></script>
+    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="accede/css/dstyle4.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="page-sidebar">
+    <div class="sidebar-header-section">
+        <a href="#" class="brand-logo-link"><i>KoMiCo</i></a>
+        <div class="brand-subtitle-text">외주 품질관리 시스템</div>
+    </div>
+    <ul class="navigation-menu-list">
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="dashboard">
+                <img src="accede/images/side_img1.svg" alt="Sidebar icon">
+                <span>대시보드</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="coa">
+                <img src="accede/images/side_img2.svg" alt="Sidebar icon">
+                <span>CoA</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <img src="accede/images/side_img3.svg" alt="Sidebar icon">
+                <span>Audit</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="auditSubmenu">
+                <li class="submenu-item-link" data-page="audit-plan">계획</li>
+                <li class="submenu-item-link" data-page="audit-result">결과</li>
+                <li class="submenu-item-link" data-page="audit-finding">Finding</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <img src="accede/images/side_img4.svg" alt="Sidebar icon">
+                <span>NCR</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="ncrSubmenu">
+                <li class="submenu-item-link" data-page="ncr-occur">발생</li>
+                <li class="submenu-item-link" data-page="ncr-car">CAR</li>
+                <li class="submenu-item-link" data-page="ncr-action">조치</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="pdn">
+                <img src="accede/images/side_img5.svg" alt="Sidebar icon">
+                <span>PDN</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-page="spc">
+                <img src="accede/images/side_img6.svg" alt="Sidebar icon">
+                <span>SPC</span>
+            </a>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <img src="accede/images/side_img7.svg" alt="Sidebar icon">
+                <span>문서</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="reportSubmenu">
+                <li class="submenu-item-link" data-page="report-sqr">SQR</li>
+                <li class="submenu-item-link" data-page="report-drawing">도면</li>
+            </ul>
+        </li>
+        <li class="navigation-menu-item">
+            <a href="#" class="menu-item-link" data-bs-toggle="dropdown">
+                <img src="accede/images/side_img8.svg" alt="Sidebar icon">
+                <span>설정</span>
+                <i class="bi bi-chevron-right submenu-toggle-icon"></i>
+            </a>
+            <ul class="dropdown-menu" id="settingSubmenu">
+                <li class="submenu-item-link" data-page="setting-company">업체</li>
+                <li class="submenu-item-link" data-page="setting-risk">위험</li>
+                <li class="submenu-item-link" data-page="setting-standard">기준값</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="right-section">
+    <!-- Top Bar -->
+    <div class="app-topbar">
+        <div class="topbar-left-section"></div>
+        <div class="topbar-right-section">
+            <a href="#" class="topbar-nav-link"><b>공지사항</b></a>
+            <a href="#" class="topbar-nav-link"><b>1:1문의</b></a>
+            <button class="topbar-action-button" title="알림">
+                <img src="accede/images/bell.svg" alt="bell icon">
+            </button>
+            <span class="topbar-user-name"><b>최현우</b></span>
+            <button class="topbar-action-button" title="즐겨찾기">
+                <img src="accede/images/topbar_arrow.svg" alt="arrow icon">
+            </button>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-cointainer">
+            <img src="accede/images/PCN.svg" alt="breadcrumb logo">
+        </div>
+
+        <!-- Information Section -->
+        <div class="container-fluid info-container white-section-card">
+            <h3 class="info-section-title"><b>기본 정보</b></h3>
+            <div class="info-card">
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">등록일자</div>
+                        <div class="info-value">2025.10.10</div>
+                    </div>
+                    <div class="info-half">
+                        <div class="info-label">상태</div>
+                        <div class="info-value">진행</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">PCN No.</div>
+                        <div class="info-value">123456</div>
+                    </div>
+                    <div class="info-half">
+                        <div class="info-label">PCN 등급</div>
+                        <div class="info-value">C</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">업체 구분</div>
+                        <div class="info-value">ASP</div>
+                    </div>
+                    <div class="info-half">
+                        <div class="info-label">업체명</div>
+                        <div class="info-value">세진정밀</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">Part 명</div>
+                        <div class="info-value">(R)PAT_SUS Wall Liner_Al203+5F</div>
+                    </div>
+                    <div class="info-half">
+                        <div class="info-label">S/N</div>
+                        <div class="info-value">C03340520</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">진행일자</div>
+                        <div class="info-value">2025.10.10</div>
+                    </div>
+                    <div class="info-half">
+                        <div class="info-label">완료일자</div>
+                        <div class="info-value">2025.10.10</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">제목</div>
+                        <div class="info-value">부적합 등록합니다.</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">변경 목적</div>
+                        <div class="info-value">부적합 등록합니다.</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-half">
+                        <div class="info-label">기대효과</div>
+                        <div class="info-value">부적합 등록합니다.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Section: Two separate cards with gap -->
+            <div class="change-section">
+
+                <!-- 변경 전 card -->
+                <div class="change-card">
+                    <div class="change-title">변경 전</div>
+                    <div class="change-column">
+                        <div class="change-row">
+                            <div class="change-label">내용</div>
+                            <div class="change-value">잘 수행하고 있는것 같음</div>
+                        </div>
+                        <div class="change-row">
+                            <div class="change-label">사진
+                                <button type="button" class="btn-add-img"><img src="accede/images/dashboard4_img_button.svg" alt="#"></button>
+                            </div>
+                            <div class="change-image-cointainer">
+                                <div class="file-management-header">
+                                    <div class="file-info-text">50MB이하/jpg, png 파일형식 가능</div>
+                                </div>
+                                <input type="file" class="img-file-input" accept="image/png, image/jpeg" multiple hidden>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 변경 후 card -->
+                <div class="change-card">
+                    <div class="change-title">변경 후</div>
+                    <div class="change-column">
+                        <div class="change-row">
+                            <div class="change-label">변경 후</div>
+                            <div class="change-value">잘 수행하고 있는것 같음</div>
+                        </div>
+                        <div class="change-row">
+                            <div class="change-label">사진
+                                <button type="button" class="btn-add-img"><img src="accede/images/dashboard4_img_button.svg" alt="#"></button>
+                            </div>
+                            <div class="change-image-cointainer">
+                                <div class="file-management-header">
+                                    <div class="file-info-text">50MB이하/jpg, png 파일형식 가능</div>
+                                </div>
+                                <input type="file" class="img-file-input" accept="image/png, image/jpeg" multiple hidden>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Info2 Section: 최종 결정 -->
+        <div class="table-content">
+            <div class="white-section-card">
+                <h3 class="info-section-title"><b>최종 결정</b></h3>
+                <div class="info2-card">
+                    <div class="info-row">
+                        <div class="info-half">
+                            <div class="info-label">Confirm Comment</div>
+                            <div class="info-value">
+                                <textarea class="comment-textarea" placeholder="내용을 입력해 주세요."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-half">
+                            <div class="info-label">Close Comment</div>
+                            <div class="info-value">
+                                <textarea class="comment-textarea" placeholder="내용을 입력해 주세요."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-half">
+                            <div class="info-label">PCN 등급</div>
+                            <div class="info-value">
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="A">
+                                    <label class="form-check-label" for="inlineRadio1">A</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="B">
+                                    <label class="form-check-label" for="inlineRadio2">B</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="C">
+                                    <label class="form-check-label" for="inlineRadio3">C</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="D">
+                                    <label class="form-check-label" for="inlineRadio4">D</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="E">
+                                    <label class="form-check-label" for="inlineRadio5">E</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="F">
+                                    <label class="form-check-label" for="inlineRadio6">F</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="G">
+                                    <label class="form-check-label" for="inlineRadio7">G</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="custom-radio" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="H">
+                                    <label class="form-check-label" for="inlineRadio8">H</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info3 Section: 평가 결과 -->
+        <div class="table-content">
+            <div class="white-section-card">
+                <h3 class="info-section-title"><b>평가 결과</b></h3>
+                <div class="info3-card">
+                    <!-- Header Row -->
+                    <div class="info3-row info3-header-row">
+                        <div class="info3-cell">번호</div>
+                        <div class="info3-cell">부서</div>
+                        <div class="info3-cell">이름</div>
+                        <div class="info3-cell">직위</div>
+                    </div>
+                    <!-- Data Row 1 -->
+                    <div class="info3-row">
+                        <div class="info3-cell number-data">1</div>
+                        <div class="info3-cell">QA팀</div>
+                        <div class="info3-cell">홍길동</div>
+                        <div class="info3-cell">과장</div>
+                    </div>
+                    <!-- Data Row 2 -->
+                    <div class="info3-row">
+                        <div class="info3-cell number-data">2</div>
+                        <div class="info3-cell">QA팀</div>
+                        <div class="info3-cell">김미나</div>
+                        <div class="info3-cell">부장</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="table-action-buttons">
+            <button type="button" class="btn-delete"><img src="accede/images/delete.svg" alt="#">삭제</button>
+            <div class="action-buttons-group">
+                <button type="button" class="btn btn-outline-secondary"><img src="accede/images/dash3_button2.svg" alt="#">목록</button>
+                <button type="button" class="btn btn-dark"><img src="accede/images/tick_icon.svg" alt="#">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Viewer Modal (Bootstrap) -->
+<div class="modal fade" id="imageViewerModal" tabindex="-1" aria-labelledby="imageViewerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageViewerModalLabel">이미지 보기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalImageGrid"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" id="modalCancelBtn" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-dark" id="modalSaveBtn">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.min.js"></script>
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+<script src="accede/js/dscript4.js"></script>
+
+</body>
+</html>
