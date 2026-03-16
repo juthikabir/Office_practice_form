@@ -46,7 +46,7 @@ function showMobilePopup(clickedElement, submenuItems) {
     });
     popup.appendChild(div);
   });
-  popup.classList.add("show");
+  popup.classList.add("show") ;
 }
 
 function closeMobilePopup() {
