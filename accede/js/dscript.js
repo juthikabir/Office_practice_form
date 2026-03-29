@@ -449,3 +449,47 @@ function loadScript(src, callback) {
     script.onload = callback;
     document.head.appendChild(script);
 }
+
+const grid = new Grid({
+  el: document.getElementById("grid"),
+  data: [
+    {
+      no: 1,
+      partCode: "S1234546",
+      partName: "(R)PAT_SUS Wall Liner_Al203+5F",
+      registerName: "홍길동",
+      registerDate: "2025.05.26",
+    },
+  ],
+  pageOptions: {
+    useClient: true,
+    perPage: 10,
+  },
+  columns: [
+    { header: "번호", name: "no", width: 80, align: "center" },
+    { header: "Part 코드", name: "partCode", align: "center", width: 140 },
+    { header: "Part 명", name: "partName", align: "left" },
+    { header: "등록자", name: "registerName", align: "center", width: 120 },
+    { header: "등록일자", name: "registerDate", align: "center", width: 120 },
+  ],
+  rowHeight: "auto",
+  themeOptions: {
+    cell: {
+      header: {
+        background: "#F5F5F7",
+        height: 46,
+        verticalAlign: "middle",
+        border: "#EEEEEE",
+      },
+      normal: {
+        height: 46,
+        verticalAlign: "middle",
+        border: "#EEEEEE",
+        showHorizontalBorder: true,
+        showVerticalBorder: true,
+      },
+    },
+  },
+  scrollX: false,
+  scrollY: false,
+});
