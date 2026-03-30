@@ -55,7 +55,7 @@ function closeMobilePopup() {
   if (popup) popup.classList.remove("show");
 }
 
-//  TABLE POSITION
+// TABLE POSITION
 function adjustTablePosition() {
   const filterSection = document.querySelector(".filter-section");
   const tableContent = document.querySelector(".table-content");
@@ -287,15 +287,58 @@ const allSampleData = [
 
 //  COLUMN DEFINITIONS
 const coaColumns = [
-  { key: "no", label: "번호", align: "center", width: "60px" },
-  { key: "date", label: "입고일", align: "center", width: "110px" },
-  { key: "companyType", label: "업체구분", align: "center", width: "90px" },
-  { key: "companyName", label: "업체명", align: "center", width: "130px" },
-  { key: "partCode", label: "Part 코드", align: "center", width: "120px" },
-  { key: "partName", label: "Part 명 (품명)", align: "left" },
-  { key: "sn", label: "S/N", align: "center", width: "90px" },
-  { key: "equipment", label: "설비", align: "center", width: "140px" },
-  { key: "status", label: "상태", align: "center", width: "80px" },
+  { 
+    key: "no", 
+    label: "번호", 
+    align: "center", 
+    width: "60px" 
+  },
+  { 
+    key: "date", 
+    label: "입고일", 
+    align: "center", 
+    width: "110px" 
+  },
+  { 
+    key: "companyType", 
+    label: "업체구분", 
+    align: "center", 
+    width: "90px" 
+  },
+  { 
+    key: "companyName", 
+    label: "업체명", 
+    align: "center", 
+    width: "130px" 
+  },
+  { 
+    key: "partCode", 
+    label: "Part 코드", 
+    align: "center", 
+    width: "120px" 
+  },
+  { key: "partName", 
+    label: "Part 명 (품명)", 
+    align: "left" 
+  },
+  { 
+    key: "sn", 
+    label: "S/N", 
+    align: "center", 
+    width: "90px" 
+  },
+  { 
+    key: "equipment", 
+    label: "설비", 
+    align: "center", 
+    width: "140px" 
+  },
+  { 
+    key: "status", 
+    label: "상태", 
+    align: "center", 
+    width: "80px" 
+  },
 ];
 
 //  TABLE STATE
@@ -417,7 +460,7 @@ function applyDateFilter() {
   const startVal = dateInputs[0] ? dateInputs[0].value.trim() : "";
   const endVal = dateInputs[1] ? dateInputs[1].value.trim() : "";
 
-  if (!startVal && !endVal) {
+  if (!startVal || !endVal) {
     currentData = allSampleData.slice();
     currentPage = 1;
     renderTable(currentData, coaColumns, ".table-content");
