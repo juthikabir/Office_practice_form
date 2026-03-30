@@ -12,7 +12,9 @@ body {
     background: #f7f7f7;
 }
 
-/* Sidebar Style */
+/* ============================================================
+   SIDEBAR
+============================================================ */
 
 .page-sidebar {
     position: fixed;
@@ -249,8 +251,9 @@ body {
     color: #3498db;
 }
 
-
-/* Top Bar Style */
+/* ============================================================
+   TOP BAR
+============================================================ */
 
 .app-topbar {
     position: fixed;
@@ -329,7 +332,9 @@ body {
     color: #333;
 }
 
-/* Breadcrumb */
+/* ============================================================
+   BREADCRUMB
+============================================================ */
 
 .breadcrumb-cointainer {
     position: fixed;
@@ -345,8 +350,6 @@ body {
     font-size: none;
     box-shadow: none;
 }
-
-/* Breadcrumb Action Button */
 
 .breadcrumb-actions {
     display: flex;
@@ -391,7 +394,9 @@ body {
     color: #3498db;
 }
 
-/* FILTER SECTION */
+/* ============================================================
+   FILTER SECTION
+============================================================ */
 
 .filter-section {
     position: fixed;
@@ -555,7 +560,7 @@ body {
     line-height: 10px;
 }
 
-/* Modern Quick Date Buttons */
+/* Quick Date Buttons */
 
 .btn-date-quick-modern {
     background: #f5f5f5;
@@ -581,7 +586,8 @@ body {
     transform: translateY(1px);
 }
 
-/* Custom Dropdown Styling */
+/* Custom Dropdown */
+
 .custom-dropdown {
     position: relative;
     width: 180px;
@@ -706,6 +712,7 @@ body {
 .filter-select-modern:hover { border-color: #b0b0b0; }
 
 /* Modern Input */
+
 .filter-input-modern {
     width: 180px;
     height: 38px;
@@ -728,7 +735,7 @@ body {
 
 .filter-input-modern:hover { border-color: #b0b0b0; }
 
-/* FILTER STYLES (legacy) */
+/* Legacy Filter Styles */
 
 .filter-group { display: flex; align-items: center; gap: 8px; }
 .filter-label { font-size: 14px; font-weight: 500; color: #333; white-space: nowrap; min-width: 80px; }
@@ -762,8 +769,9 @@ body {
 .filter-footer { display: flex; align-items: center; padding-top: 8px; border-top: 1px solid #f0f0f0; }
 .filter-count { font-size: 13px; color: #666; font-weight: 500; }
 
-
-/* TABLE CONTENT */
+/* ============================================================
+   TABLE CONTENT
+============================================================ */
 
 .table-content {
     position: fixed;
@@ -783,7 +791,7 @@ body {
 .dt-status-defect    { color: #e53935; font-weight: 600; }
 .dt-status-dash      { color: #999; }
 
-/* ── DataTable Class Styles ── */
+/* DataTable Styles */
 
 .dt-wrapper {
     background: #fff;
@@ -939,7 +947,9 @@ body {
     cursor: default;
 }
 
-/* ===================== RESPONSIVE ===================== */
+/* ============================================================
+   RESPONSIVE
+============================================================ */
 
 @media (max-width: 768px) {
     .page-sidebar { width: 70px; }
@@ -1004,9 +1014,7 @@ body {
         right: 0;
     }
 
-    .table-content {
-        left: 70px;
-    }
+    .table-content { left: 70px; }
 
     .filter-row { flex-direction: column; align-items: stretch; gap: 12px; }
     .filter-group-modern { width: 100%; }
@@ -1016,7 +1024,8 @@ body {
     .filter-date-input-modern { width: 100%; }
 }
 
-/* Mobile Submenu Modal Styles */
+/* Mobile Submenu Modal */
+
 .mobile-submenu-modal {
     display: none;
     position: fixed;
