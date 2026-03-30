@@ -1,40 +1,4 @@
-// STATUS CELL RENDERER 
-class StatusRenderer {
-  constructor(props) {
-    this.el = document.createElement("span");
-    this.render(props);
-  }
-  getElement() {
-    return this.el;
-  }
-  render(props) {
-    const val = props.value || "";
-    let color = "#333",
-      weight = "500";
-    if (val === "재측정") {
-      color = "#3498db";
-      weight = "600";
-    } else if (val === "불량") {
-      color = "#e53935";
-      weight = "600";
-    } else if (val === "반출") {
-      color = "#555";
-      weight = "500";
-    } else if (val === "정상") {
-      color = "#333";
-      weight = "500";
-    } else if (val === "-") {
-      color = "#999";
-      weight = "400";
-    }
-    this.el.style.color = color;
-    this.el.style.fontWeight = weight;
-    this.el.style.fontSize = "13px";
-    this.el.textContent = val;
-  }
-}
-
-// MOBILE HELPERS 
+//  MOBILE HELPERS
 function isMobileView() {
   return window.innerWidth <= 768;
 }
@@ -91,17 +55,17 @@ function closeMobilePopup() {
   if (popup) popup.classList.remove("show");
 }
 
-// TABLE POSITION 
+//  TABLE POSITION
 function adjustTablePosition() {
   const filterSection = document.querySelector(".filter-section");
   const tableContent = document.querySelector(".table-content");
   if (filterSection && tableContent) {
     const filterBottom = filterSection.getBoundingClientRect().bottom;
-    tableContent.style.top = filterBottom + 0 + "px";
+    tableContent.style.top = filterBottom + "px";
   }
 }
 
-// CUSTOM DROPDOWNS
+//  CUSTOM DROPDOWNS
 function initializeCustomDropdowns() {
   const dropdowns = document.querySelectorAll(".custom-dropdown");
   dropdowns.forEach(function (dropdown) {
@@ -133,7 +97,7 @@ function initializeCustomDropdowns() {
   });
 }
 
-// DATE PICKERS 
+//  DATE PICKERS
 function initializeDatePickers() {
   const dateInputs = document.querySelectorAll(".filter-date-input-modern");
   if (dateInputs.length < 2) return null;
@@ -207,43 +171,7 @@ function initializeQuickDateButtons(pickers) {
   btns[3].addEventListener("click", () => setRange(-2));
 }
 
-// GRID INFO BAR
-function buildGridInfoBar(totalCount) {
-  const tableContent = document.querySelector(".table-content");
-  if (!tableContent) return;
-
-  let infoBar = document.querySelector(".table-info-bar");
-  if (infoBar) infoBar.remove();
-
-  infoBar = document.createElement("div");
-  infoBar.className = "table-info-bar";
-  infoBar.innerHTML = `
-        <span class="table-total-count">총 ${totalCount}건</span>
-        <button class="btn-excel-download" id="btnExcelDownload">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="2" y="3" width="20" height="18" rx="2" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
-                <path d="M8 8l2.5 4-2.5 4M16 8l-2.5 4 2.5 4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M2 9h20" stroke="#4caf50" stroke-width="1" stroke-opacity="0.4"/>
-            </svg>
-            엑셀 다운로드
-        </button>
-    `;
-  tableContent.insertBefore(infoBar, tableContent.firstChild);
-
-  document
-    .getElementById("btnExcelDownload")
-    .addEventListener("click", function () {
-      alert("엑셀 다운로드 기능은 서버 연동 후 지원됩니다.");
-    });
-}
-
-// UPDATE INFO BAR COUNT
-function updateInfoBarCount(count) {
-  const countEl = document.querySelector(".table-total-count");
-  if (countEl) countEl.textContent = `총 ${count}건`;
-}
-
-// SAMPLE DATA (varied dates for filtering demo) 
+//  DATA ARRAY
 const allSampleData = [
   {
     no: 10,
@@ -357,11 +285,122 @@ const allSampleData = [
   },
 ];
 
-// GLOBAL GRID REFERENCE 
-let gridInstance = null;   //stores the grid object
+//  COLUMN DEFINITIONS
+const coaColumns = [
+  { key: "no", label: "번호", align: "center", width: "60px" },
+  { key: "date", label: "입고일", align: "center", width: "110px" },
+  { key: "companyType", label: "업체구분", align: "center", width: "90px" },
+  { key: "companyName", label: "업체명", align: "center", width: "130px" },
+  { key: "partCode", label: "Part 코드", align: "center", width: "120px" },
+  { key: "partName", label: "Part 명 (품명)", align: "left" },
+  { key: "sn", label: "S/N", align: "center", width: "90px" },
+  { key: "equipment", label: "설비", align: "center", width: "140px" },
+  { key: "status", label: "상태", align: "center", width: "80px" },
+];
 
-// DATE FILTER LOGIC   Parse a "YYYY-MM-DD" string into a local midnight Date object.
+//  TABLE STATE
+let currentData = allSampleData.slice();
+let currentPage = 1;
+const perPage = 10;
 
+//  RENDER TABLE  —  array loop → HTML table
+function statusClass(val) {
+  const map = {
+    정상: "dt-status-normal",
+    반출: "dt-status-return",
+    재측정: "dt-status-remeasure",
+    불량: "dt-status-defect",
+    "-": "dt-status-dash",
+  };
+  return map[val] || "";
+}
+
+function renderTable(data, columns, containerSelector) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const total = data.length;
+  const totalPages = Math.max(1, Math.ceil(total / perPage));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const start = (currentPage - 1) * perPage;
+  const pageRows = data.slice(start, start + perPage);
+
+  // header — loop columns array
+  const headerCells = columns
+    .map((col) => {
+      const w = col.width ? `style="width:${col.width}"` : "";
+      return `<th ${w}>${col.label}</th>`;
+    })
+    .join("");
+
+  // body — loop data array
+  const bodyRows = pageRows.length
+    ? pageRows
+        .map((row) => {
+          const cells = columns
+            .map((col) => {
+              const val = row[col.key] !== undefined ? row[col.key] : "";
+              const cls = col.key === "status" ? statusClass(val) : "";
+              return `<td style="text-align:${col.align || "center"}" class="${cls}">${val}</td>`;
+            })
+            .join("");
+          return `<tr>${cells}</tr>`;
+        })
+        .join("")
+    : `<tr><td colspan="${columns.length}" class="dt-empty">데이터가 없습니다.</td></tr>`;
+
+  // pagination buttons
+  let pagBtns = "";
+  if (totalPages > 1) {
+    pagBtns += `<button class="dt-page-btn" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""}>&#8249;</button>`;
+    for (let i = 1; i <= totalPages; i++) {
+      pagBtns += `<button class="dt-page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
+    }
+    pagBtns += `<button class="dt-page-btn" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""}>&#8250;</button>`;
+  }
+
+  // inject into DOM
+  container.innerHTML = `
+    <div class="dt-wrapper">
+      <div class="dt-info-bar">
+        <span class="dt-total-count">총 ${total}건</span>
+        <button class="dt-btn-excel" id="btnExcelDownload">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="3" width="20" height="18" rx="2" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+            <path d="M8 8l2.5 4-2.5 4M16 8l-2.5 4 2.5 4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M2 9h20" stroke="#4caf50" stroke-width="1" stroke-opacity="0.4"/>
+          </svg>
+          엑셀 다운로드
+        </button>
+      </div>
+      <div class="dt-table-wrap">
+        <table class="dt-table">
+          <thead><tr>${headerCells}</tr></thead>
+          <tbody>${bodyRows}</tbody>
+        </table>
+      </div>
+      <div class="dt-pagination">${pagBtns}</div>
+    </div>
+  `;
+
+  // excel button event
+  document
+    .getElementById("btnExcelDownload")
+    .addEventListener("click", function () {
+      alert("엑셀 다운로드 기능은 서버 연동 후 지원됩니다.");
+    });
+
+  // pagination click events
+  container.querySelectorAll(".dt-page-btn:not([disabled])").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      currentPage = parseInt(this.dataset.page, 10);
+      renderTable(currentData, coaColumns, containerSelector);
+    });
+  });
+}
+
+//  DATE FILTER
 function parseLocalDate(str) {
   if (!str) return null;
   const parts = str.split("-");
@@ -373,27 +412,21 @@ function parseLocalDate(str) {
   );
 }
 
-// Read the current date inputs, filter allSampleData, update the grid.
-// If neither date is filled → restore all rows in original order.
- 
 function applyDateFilter() {
-  if (!gridInstance) return;
-
   const dateInputs = document.querySelectorAll(".filter-date-input-modern");
   const startVal = dateInputs[0] ? dateInputs[0].value.trim() : "";
   const endVal = dateInputs[1] ? dateInputs[1].value.trim() : "";
 
-  // No dates selected → show everything unsorted (original order)
   if (!startVal && !endVal) {
-    gridInstance.resetData(allSampleData);
-    updateInfoBarCount(allSampleData.length);
+    currentData = allSampleData.slice();
+    currentPage = 1;
+    renderTable(currentData, coaColumns, ".table-content");
     return;
   }
 
   const startDate = parseLocalDate(startVal);
   const endDate = parseLocalDate(endVal);
 
-  // Filter rows whose date falls within [startDate, endDate]
   let filtered = allSampleData.filter(function (row) {
     const rowDate = parseLocalDate(row.date);
     if (!rowDate) return false;
@@ -402,149 +435,28 @@ function applyDateFilter() {
     return true;
   });
 
-  // Sort ascending by date within the filtered set
-  filtered = filtered.slice().sort(function (a, b) {
-    return parseLocalDate(a.date) - parseLocalDate(b.date);
-  });
+  filtered = filtered
+    .slice()
+    .sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date));
 
-  gridInstance.resetData(filtered);
-  updateInfoBarCount(filtered.length);
+  currentData = filtered;
+  currentPage = 1;
+  renderTable(currentData, coaColumns, ".table-content");
 }
 
-// TUI GRID INITIALIZATION 
-function initializeGrid() {
-  const el = document.getElementById("grid");
-  if (!el) {
-    console.error("#grid element not found");
-    return;
-  }
-  if (typeof tui === "undefined" || typeof tui.Grid === "undefined") {
-    console.error("tui.Grid is not loaded");
-    return;
-  }
-
-  // Build info bar with total count
-  buildGridInfoBar(allSampleData.length);
-
-  tui.Grid.applyTheme("default", {
-    cell: {
-      header: {
-        background: "#f7f8fa",
-        border: "#e5e7eb",
-        text: "#444",
-      },
-      normal: {
-        border: "#f0f0f0",
-        text: "#333",
-      },
-      selectedHeader: {
-        background: "#f7f8fa",
-      },
-      focused: {
-        border: "#3498db",
-      },
-    },
-  });
-
-  gridInstance = new tui.Grid({
-    el: el,
-    data: allSampleData,
-    pageOptions: {
-      useClient: true,
-      perPage: 10,
-    },
-    bodyHeight: "auto",
-    scrollX: false,
-    scrollY: false,
-    columns: [
-      {
-        header: "번호",
-        name: "no",
-        width: 60,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "입고일",
-        name: "date",
-        width: 110,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "업체구분",
-        name: "companyType",
-        width: 90,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "업체명",
-        name: "companyName",
-        width: 130,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "Part 코드",
-        name: "partCode",
-        width: 120,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "Part 명 (품명)",
-        name: "partName",
-        align: "left",
-        sortable: false,
-      },
-      {
-        header: "S/N",
-        name: "sn",
-        width: 90,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "설비",
-        name: "equipment",
-        width: 140,
-        align: "center",
-        sortable: false,
-      },
-      {
-        header: "상태",
-        name: "status",
-        width: 80,
-        align: "center",
-        sortable: false,
-        renderer: { type: StatusRenderer },
-      },
-    ],
-    rowHeight: 46,
-    columnOptions: {
-      resizable: true,
-    },
-  });
-
-  // Adjust table position after grid renders
-  setTimeout(adjustTablePosition, 100);
-
-  return gridInstance;
-}
-
-// MAIN 
+//  MAIN
 document.addEventListener("DOMContentLoaded", function () {
-  // Custom Dropdowns
   initializeCustomDropdowns();
 
-  // Date Pickers
   if (typeof flatpickr !== "undefined") {
     const pickers = initializeDatePickers();
     if (pickers) initializeQuickDateButtons(pickers);
   }
 
-  // 검색 button → apply date filter on click
+  // Render table from array
+  renderTable(allSampleData, coaColumns, ".table-content");
+
+  // 검색 button
   const searchBtn = document.querySelector(".btn-breadcrumb-primary");
   if (searchBtn) {
     searchBtn.addEventListener("click", function () {
@@ -552,21 +464,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // 초기화 button → clear both date inputs and restore full table
+  // 초기화 button
   const resetBtn = document.querySelector(".btn-breadcrumb-secondary");
   if (resetBtn) {
     resetBtn.addEventListener("click", function () {
-      // Clear flatpickr instances
       const dateInputs = document.querySelectorAll(".filter-date-input-modern");
       dateInputs.forEach(function (input) {
         if (input._flatpickr) input._flatpickr.clear();
         else input.value = "";
       });
-      // Restore full unsorted data
-      if (gridInstance) {
-        gridInstance.resetData(allSampleData);
-        updateInfoBarCount(allSampleData.length);
-      }
+      currentData = allSampleData.slice();
+      currentPage = 1;
+      renderTable(currentData, coaColumns, ".table-content");
     });
   }
 
@@ -646,7 +555,5 @@ document.addEventListener("DOMContentLoaded", function () {
     adjustTablePosition();
   });
 
-  // Initialize TUI Grid
-  initializeGrid();
   adjustTablePosition();
 });
