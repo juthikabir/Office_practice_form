@@ -423,7 +423,6 @@ body {
     background: transparent;
     border: none;
     border-radius: 0;
-  
 }
 
 .filter-row:last-of-type {
@@ -764,11 +763,11 @@ body {
 .filter-count { font-size: 13px; color: #666; font-weight: 500; }
 
 
-/*  TABLE CONTENT */
+/* TABLE CONTENT */
 
 .table-content {
     position: fixed;
-    top: 320px;           /* fallback – overridden by JS adjustTablePosition() */
+    top: 320px;
     left: 280px;
     right: 0;
     bottom: 0;
@@ -777,32 +776,38 @@ body {
     background: #f7f7f7;
 }
 
-/* TABLE WRAPPER CARD  */
+/* Status badge colors */
+.dt-status-normal    { color: #333; font-weight: 500; }
+.dt-status-return    { color: #555; font-weight: 500; }
+.dt-status-remeasure { color: #3498db; font-weight: 600; }
+.dt-status-defect    { color: #e53935; font-weight: 600; }
+.dt-status-dash      { color: #999; }
 
-.table-card {
+/* ── DataTable Class Styles ── */
+
+.dt-wrapper {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     overflow: hidden;
 }
 
-/* Table top info bar: "총 N건" left, Excel button right */
-.table-info-bar {
+.dt-info-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4px 10px 4px;
-    border-bottom: none;
-    background: transparent;
+    padding: 14px 16px 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fff;
 }
 
-.table-total-count {
+.dt-total-count {
     font-size: 14px;
     font-weight: 500;
     color: #333;
 }
 
-.btn-excel-download {
+.dt-btn-excel {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -815,169 +820,123 @@ body {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    text-decoration: none;
 }
 
-.btn-excel-download:hover {
+.dt-btn-excel:hover {
     background: #f0f7f0;
     border-color: #4caf50;
     color: #388e3c;
 }
 
-.btn-excel-download svg {
+.dt-btn-excel svg {
     width: 16px;
     height: 16px;
     flex-shrink: 0;
 }
 
-/* DATATABLE OVERRIDES  */
-
-/* Hide the default DataTables info and buttons since we have custom ones */
-#example_wrapper .dt-layout-row:first-child {
-    display: none !important;
+.dt-table-wrap {
+    overflow-x: auto;
 }
 
-/* Pagination row styling */
-
-
-div.dt-container .dt-paging {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-    cursor: default;
-    color: rgba(0, 0, 0, 0.5) !important;
-    border: 1px solid transparent;
-    background: transparent;
-    box-shadow: none;
-}
-
-.table-pagination-outside {
-    display: flex;
-    justify-content: center;
-    padding: 16px 0 8px 0;
-    background: transparent;
+.dt-table {
     width: 100%;
-}
-
-.table-pagination-outside .dt-paging-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    margin: 0 3px;
-    border-radius: 50% !important;
-    border: none !important;
-    outline: none !important;
-    background: transparent !important;
-    color: #555 !important;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: none !important;
-}
-
-.table-pagination-outside  .dt-paging-button:hover {
-    background: #e8f4fd !important;
-    border-color: #3498db !important;
-    color: #3498db !important;
-}
-
-.table-pagination-outside  .dt-paging-button.currernt {
-    background: #3498db !important;
-    border-color: #3498db !important;
-    color: #fff !important;
-    font-weight: 600;
-}
-
-.table-pagination-outside  .dt-paging-button.disable {
-    opacity: 0.4;
-    cursor: default;
-}
-
-.table-pagination-outside  .dt-paging {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-/* Table base styles */
-#example {
-    width: 100% !important;
     border-collapse: collapse;
-    margin: 0 !important;
 }
 
-#example thead tr {
+.dt-table thead tr {
     background: #f7f8fa;
     border-top: 1px solid #e5e7eb;
     border-bottom: 2px solid #e5e7eb;
 }
 
-#example thead th {
-    padding: 12px 14px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: #444 !important;
-    text-align: center !important;
+.dt-table thead th {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    text-align: center;
     border-right: 1px solid #e5e7eb;
-    background: #f7f8fa;
     white-space: nowrap;
 }
 
-#example thead th:last-child {
+.dt-table thead th:last-child {
     border-right: none;
 }
 
-#example tbody tr {
+.dt-table tbody tr {
     border-bottom: 1px solid #f0f0f0;
     transition: background 0.15s ease;
 }
 
-#example tbody tr:last-child {
+.dt-table tbody tr:last-child {
     border-bottom: none;
 }
 
-#example tbody tr:hover {
+.dt-table tbody tr:hover {
     background: #f5faff;
 }
 
-#example tbody td {
-    padding: 11px 14px !important;
-    font-size: 13px !important;
+.dt-table tbody td {
+    padding: 11px 14px;
+    font-size: 13px;
     color: #333;
-    text-align: center;
     border-right: 1px solid #f0f0f0;
 }
 
-#example tbody td:last-child {
+.dt-table tbody td:last-child {
     border-right: none;
 }
 
-/* Status badge colors like in the picture */
-.status-normal {
-    color: #333;
-    font-weight: 500;
-}
-
-.status-return {
-    color: #555;
-    font-weight: 500;
-}
-
-.status-remeasure {
-    color: #3498db;
-    font-weight: 600;
-}
-
-.status-defect {
-    color: #e53935;
-    font-weight: 600;
-}
-
-.status-dash {
+.dt-empty {
+    text-align: center !important;
     color: #999;
+    padding: 40px 0 !important;
+    font-size: 14px;
+}
+
+/* Pagination */
+
+.dt-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 0;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+}
+
+.dt-page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dt-page-btn:hover {
+    background: #e8f4fd;
+    color: #3498db;
+}
+
+.dt-page-btn.active {
+    background: #3498db;
+    color: #fff;
+    font-weight: 600;
+}
+
+.dt-page-btn[disabled] {
+    opacity: 0.35;
+    cursor: default;
 }
 
 /* ===================== RESPONSIVE ===================== */
