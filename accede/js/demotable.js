@@ -1,6 +1,4 @@
-// ============================================================
 //  MOBILE HELPERS
-// ============================================================
 
 function isMobileView() {
   return window.innerWidth <= 768;
@@ -57,9 +55,8 @@ function closeMobilePopup() {
   if (popup) popup.classList.remove("show");
 }
 
-// ============================================================
 //  TABLE POSITION
-// ============================================================
+
 
 function adjustTablePosition() {
   const filterSection = document.querySelector(".filter-section");
@@ -70,9 +67,7 @@ function adjustTablePosition() {
   }
 }
 
-// ============================================================
 //  CUSTOM DROPDOWNS
-// ============================================================
 
 function initializeCustomDropdowns() {
   document.querySelectorAll(".custom-dropdown").forEach(function (dropdown) {
@@ -107,9 +102,8 @@ function initializeCustomDropdowns() {
   });
 }
 
-// ============================================================
 //  DATE PICKERS
-// ============================================================
+
 
 function initializeDatePickers() {
   const dateInputs = document.querySelectorAll(".filter-date-input-modern");
@@ -191,9 +185,7 @@ function initializeQuickDateButtons(pickers) {
   btns[3].addEventListener("click", () => setRange(-2));
 }
 
-// ============================================================
 //  DATA
-// ============================================================
 
 const allSampleData = [
   {
@@ -320,11 +312,7 @@ const coaColumns = [
   { key: "status", label: "상태", align: "center", width: "80px" },
 ];
 
-// ============================================================
 //  DataTable CLASS
-//  HTML structure lives in index.html
-//  This class only reads and fills existing HTML elements
-// ============================================================
 
 class DataTable {
   // runs once when you write:  new DataTable(...)
@@ -336,16 +324,16 @@ class DataTable {
     this.pagination = document.getElementById("dt-pagination");
 
     this.columns = columns;
-    this.data = data; // original full data — never changed
+    this.data = data; 
     this.filtered = data.slice(); // working copy used for display
     this.currentPage = 1;
     this.perPage = 5; // rows shown per page
 
-    this.buildHeaders(); // headers never change, build once
-    this.render(); // fill rows and pagination
+    this.buildHeaders(); 
+    this.render(); 
   }
 
-  // fills the <thead> row — runs only once
+  // fills the <thead> row 
   buildHeaders() {
     this.theadRow.innerHTML = this.columns
       .map((col) => {
@@ -359,10 +347,10 @@ class DataTable {
   render() {
     const total = this.filtered.length;
     const totalPages = Math.max(1, Math.ceil(total / this.perPage));
-    if (this.currentPage > totalPages) this.currentPage = totalPages;
+    if (this.currentPage > totalPages) this.currentPage = totalPages;  //Page overflow handle
 
     const start = (this.currentPage - 1) * this.perPage;
-    const pageRows = this.filtered.slice(start, start + this.perPage);
+    const pageRows = this.filtered.slice(start, start + this.perPage); //show current page data
 
     // update total count text
     this.totalCountEl.textContent = `총 ${total}건`;
@@ -425,8 +413,8 @@ class DataTable {
     const start = this.toDate(startVal);
     const end = this.toDate(endVal);
 
-    this.filtered = this.data.filter((row) => {
-      const d = this.toDate(row.date);
+    this.filtered = this.data.filter((row) => { //check each row
+      const d = this.toDate(row.date); //convert each row into data
       return d >= start && d <= end;
     });
 
@@ -460,9 +448,8 @@ class DataTable {
   }
 }
 
-// ============================================================
 //  MAIN
-// ============================================================
+
 
 let coaTable;
 
@@ -480,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   if (typeof flatpickr !== "undefined") {
-    const pickers = initializeDatePickers();
+    const pickers = initializeDatePickers();  //Creates data input fields
     if (pickers) initializeQuickDateButtons(pickers);
   }
 
